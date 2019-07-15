@@ -31,5 +31,29 @@ def bubble_sort(arr):
 
 # STRETCH: implement the Count Sort function below
 def count_sort(arr, maximum=-1):
+    if len(arr) == 0:
+        return arr
 
-    return arr
+    maximum = max(arr)
+    minimum = min(arr)
+
+    count_dict = {}
+    for i in range(minimum, maximum+1):
+        count_dict[i] = 0
+
+    sorted_arr = [None] * len(arr)
+
+    for num in arr:
+        if num < 0:
+            return "Error, negative numbers not allowed in Count Sort"
+        else:
+            count_dict[num] += 1
+
+    for i in range(minimum+1, maximum+1):
+        count_dict[i] = count_dict[i] + count_dict[i-1]
+
+    for num in arr:
+        sorted_arr[count_dict[num]-1] = num
+        count_dict[num] -= 1
+
+    return sorted_arr
